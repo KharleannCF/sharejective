@@ -503,8 +503,12 @@ if __name__ == "__main__":
         time=datetime.time(hour=6, minute=00, second=00),
     )
     PORT = 443
-    updater.start_polling()
-    #HEROKULINK = os.getenv("HEROKULINK")
+    #updater.start_polling()
+    HEROKULINK = os.getenv("HEROKULINK")
+    PORT = int(os.environ.get("PORT", "8443"))
+    updater.start_webhook(listen="0.0.0.0",
+                          port=PORT,
+                          url_path=TOKEN)
     #updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path=TOKEN)
-    #updater.bot.setWebhook(HEROKULINK+TOKEN)
+    updater.bot.setWebhook(HEROKULINK+TOKEN)
     updater.idle()
