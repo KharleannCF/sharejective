@@ -465,7 +465,6 @@ if __name__ == "__main__":
         print("There was an error connecting with the database.")
     col = db["Tasks"]
     users = db["Users"]
-    replyMessage = rmm(col, event)
     """
     Tarea Dictionary: {
         action: job that must be done,
