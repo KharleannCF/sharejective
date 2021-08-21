@@ -508,7 +508,7 @@ if __name__ == "__main__":
     PORT = int(os.environ.get("PORT", "8443"))
     updater.start_webhook(listen="0.0.0.0",
                           port=PORT,
-                          url_path=TOKEN)
+                          url_path=TOKEN,
+                          webhook_url=HEROKULINK+TOKEN)
     #updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path=TOKEN)
-    updater.bot.setWebhook(HEROKULINK+TOKEN)
     updater.idle()
