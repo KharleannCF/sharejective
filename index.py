@@ -403,7 +403,7 @@ def reminderTask(update, context):
 
     context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text=f"¡Hey! me pediste que te recordara {task} ahora!",
+        text=f"¡Hey! me pediste que te recordara { usersActualTasks[update.effective_chat.id]['task']} ahora!",
     )
     context.bot.send_message(
         chat_id=update.effective_chat.id, text=f"¡Es hora de trabajar!"
