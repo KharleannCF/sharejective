@@ -18,6 +18,9 @@ from threading import Event
 import pymongo
 from bson.objectid import ObjectId
 import datetime
+import os
+from dotenv import load_dotenv
+
 
 
 def unsubscribe(update, context):
@@ -443,7 +446,9 @@ echo_handler = MessageHandler(Filters.text & (~Filters.command), normal_message)
 
 
 if __name__ == "__main__":
-    updater = Updater(token="1290339643:AAGxHS_w3cdYXPSr85BgkgfOfZgjGfCKPZU")
+    load_dotenv()
+    TOKEN= os.getenv("TOKEN")
+    updater = Updater(token=TOKEN)
     dispatcher = updater.dispatcher
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(echo_handler)
@@ -451,7 +456,7 @@ if __name__ == "__main__":
     dispatcher.add_handler(CallbackQueryHandler(button))
     event = Event()
     queuer = updater.job_queue
-    conn_str = "mongodb+srv://productibot:q8TmhQU9q2OO8YEf@cluster0.usn5y.mongodb.net/Cluster0?retryWrites=true&w=majority"
+    conn_str = os.getenv("ATLAS")
     client = pymongo.MongoClient(conn_str, serverSelectionTimeoutMS=5000)
     db = client["ShareJective"]
     try:
@@ -498,5 +503,9 @@ if __name__ == "__main__":
         days=(0, 1, 2, 3, 4, 5, 6),
         time=datetime.time(hour=6, minute=00, second=00),
     )
-    updater.start_polling()
+    PORT = int (os.environ.get("PORT", 5000))
+    #updater.start_polling()
+    HEROKULINK = os.getenv("HEROKULINK")
+    updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path=TOKEN)
+    updater.bot.setWebhook(HEROKULINK+TOKEN)
     updater.idle()
