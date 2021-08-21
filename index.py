@@ -502,7 +502,7 @@ if __name__ == "__main__":
         days=(0, 1, 2, 3, 4, 5, 6),
         time=datetime.time(hour=6, minute=00, second=00),
     )
-    PORT = int (os.environ.get("PORT", 8080))
+    PORT = int (os.environ.get("PORT", 80))
     #updater.start_polling()
     HEROKULINK = os.getenv("HEROKULINK")
     updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path=TOKEN)
