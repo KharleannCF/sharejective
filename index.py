@@ -423,14 +423,14 @@ def saveTask(chatId, task):
 
 def setReminder(update, context):
     seconds = int(update.message.text) * 3600
-    queuer.run_once(reminderTask(update, context), seconds)
+    queuer.run_once(reminderTask(update, context), when=seconds)
 
 
 def reminderTask(update, context):
 
     context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text=f"¡Hey! me pediste que te recordara { usersActualTasks[update.effective_chat.id]['task']} ahora!",
+        text=f"¡Hey, me pediste que te recordara { usersActualTasks[update.effective_chat.id]['task']} ahora!",
     )
     context.bot.send_message(
         chat_id=update.effective_chat.id, text=f"¡Es hora de trabajar!"
