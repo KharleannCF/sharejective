@@ -15,18 +15,25 @@ from telegram import (
     ReplyKeyboardMarkup,
 )
 from threading import Event
+import threading
 import pymongo
 from bson.objectid import ObjectId
 import datetime
 import os
 from dotenv import load_dotenv
-
+import requests
 
 
 def unsubscribe(update, context):
     users.find_one_and_update(
         {"chatId": update.effective_chat.id}, {"subscribed": False}
     )
+
+def petitionThread(link):
+    while True:
+        requests.get(link)
+        event.wait(600)
+
 
 
 def start(update, context):
@@ -103,8 +110,28 @@ def normal_message(update, context):
         # listar tareas
         getAllTask(update, context)
     elif update.message.text == "Agregar Tarea":
-        # listar tareas
         addTask(update, context)
+    elif update.message.text == "Info":
+        infoMessage(update, context)
+
+def infoMessage(update, context):
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, text="Este Bot fue creado por Kharleann Cabrera, puedes encontrarme por @KharleannCF en la mayoria de las redes sociales."
+    )
+    event.wait(1)
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, text="Puedes escribirme cualquier duda, recomendación o feedback, todo será bien recibido."
+    )
+    event.wait(1)
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, text="tambien puedes escribirme a khakan@hotmail.es para consultas más personales."
+    )
+    event.wait(1)
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, text="Muchas gracias por usar mi chatbot."
+    )
+    event.wait(1)
+    basicStateMessage(update, context)
 
 
 def button(update, context) -> None:
@@ -495,7 +522,7 @@ if __name__ == "__main__":
             KeyboardButton(text="Listar Tareas"),
             KeyboardButton(text="Agregar Tarea"),
         ],
-        [KeyboardButton(text="Help"), KeyboardButton(text="Info")],
+        [KeyboardButton(text="Info")],
     ]
     queuer.run_daily(
         dailyReminder,
@@ -511,4 +538,6 @@ if __name__ == "__main__":
                           url_path=TOKEN,
                           webhook_url=HEROKULINK+TOKEN)
     #updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path=TOKEN)
+    demon = threading.Thread(target=petitionThread, args=(HEROKULINK,), daemon=True)
+    demon.start()
     updater.idle()
