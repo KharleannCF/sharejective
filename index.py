@@ -426,7 +426,7 @@ def setReminder(update, context):
     queuer.run_once(reminderTask,seconds,  context=update.message.chat_id)
 
 
-def reminderTask(context: telegram.ext.CallbackContext):
+def reminderTask(context: CallbackContext):
     
     context.bot.send_message(
         chat_id=context.job.context,
