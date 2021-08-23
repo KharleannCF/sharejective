@@ -423,19 +423,24 @@ def saveTask(chatId, task):
 
 def setReminder(update, context):
     seconds = int(update.message.text) * 3600
-    queuer.run_once(reminderTask(update, context), when=seconds)
+    queuer.run_once(reminderTask,seconds,  context=update.message.chat_id)
 
 
-def reminderTask(update, context):
-
+def reminderTask(context: telegram.ext.CallbackContext):
+    
     context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text=f"¡Hey, me pediste que te recordara { usersActualTasks[update.effective_chat.id]['task']} ahora!",
+        chat_id=context.job.context,
+        text=f"¡Hey, me pediste que te recordara { usersActualTasks[context.job.context]['task']} ahora!",
     )
     context.bot.send_message(
-        chat_id=update.effective_chat.id, text=f"¡Es hora de trabajar!"
+        chat_id=context.job.context, text=f"¡Es hora de trabajar!"
     )
-    basicStateMessage(update, context)
+    generalMenu = ReplyKeyboardMarkup(GeneralTaskKeyboard)
+    context.bot.send_message(
+        chat_id=context.job.context,
+        text=f"Que deseas hacer por ahora?",
+        reply_markup=generalMenu,
+    )
 
 
 def put(update, context):
