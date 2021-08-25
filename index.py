@@ -529,9 +529,10 @@ if __name__ == "__main__":
         ],
         [KeyboardButton(text="Info")],
     ]
+    t = datetime.time(14, 38, 00, 000000)
     queuer.run_daily(
         dailyReminder,
-        datetime.time(hour=14, minute=33, second=00),
+        t,
         days=(0, 1, 2, 3, 4, 5, 6),
     )
     PORT = 443
