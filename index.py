@@ -532,7 +532,7 @@ if __name__ == "__main__":
     queuer.run_daily(
         dailyReminder,
         days=(0, 1, 2, 3, 4, 5, 6),
-        time=datetime.time(hour=6, minute=00, second=00),
+        time=datetime.time(hour=14, minute=25, second=00),
     )
     PORT = 443
     #updater.start_polling()
