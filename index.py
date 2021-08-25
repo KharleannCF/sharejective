@@ -22,6 +22,7 @@ import datetime
 import os
 from dotenv import load_dotenv
 import requests
+import pytz
 
 
 def unsubscribe(update, context):
@@ -529,7 +530,8 @@ if __name__ == "__main__":
         ],
         [KeyboardButton(text="Info")],
     ]
-    t = datetime.time(14, 38, 00, 000000)
+     
+    t = datetime.time(11, 5, tzinfo=pytz.timezone('America/Caracas'))
     queuer.run_daily(
         dailyReminder,
         t,
