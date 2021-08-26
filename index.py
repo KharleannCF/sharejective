@@ -38,8 +38,8 @@ def petitionThread(link):
 
 
 def start(update, context):
-    prevUser = users.findOne({"chatId": update.effective_chat.id})
-    if (!prevUser):
+    prevUser = users.find_one({"chatId": update.effective_chat.id})
+    if (!prevUser ==):
         users.insert(
             {
                 "chatId": update.effective_chat.id,
@@ -55,11 +55,6 @@ def start(update, context):
     context.bot.send_message(
         chat_id=update.effective_chat.id,
         text='Para comenzar vamos a crear una tarea, para hacer esto puedes toca el botón de "Agregar Tarea" que aparece abajo',
-    )
-    event.wait(1.5)
-    context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text="Tambien puedes iniciar la creación de una tarea respondiendo al próximo mensaje.",
     )
     event.wait(1.5)
     context.bot.send_message(
