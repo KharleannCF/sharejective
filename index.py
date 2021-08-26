@@ -531,11 +531,12 @@ if __name__ == "__main__":
         [KeyboardButton(text="Info")],
     ]
      
-    t = datetime.time(11, 40, tzinfo=pytz.timezone('America/Caracas'))
+    target_time = datetime.time(22,42).replace(tzinfo=local_timezone)
     queuer.run_daily(
         dailyReminder,
-        t,
+        target_time,
         days=(0, 1, 2, 3, 4, 5, 6),
+        context=CallbackContext
     )
     PORT = 443
     #updater.start_polling()
