@@ -38,13 +38,15 @@ def petitionThread(link):
 
 
 def start(update, context):
-    users.insert(
-        {
-            "chatId": update.effective_chat.id,
-            "name": update.message.from_user.name,
-            "subscribed": True,
-        }
-    )
+    prevUser = users.findOne({"chatId": update.effective_chat.id})
+    if (!prevUser):
+        users.insert(
+            {
+                "chatId": update.effective_chat.id,
+                "name": update.message.from_user.name,
+                "subscribed": True,
+            }
+        )
     context.bot.send_message(
         chat_id=update.effective_chat.id,
         text="Soy Sharejective, tu aliado en tus objetivos.",
