@@ -39,7 +39,7 @@ def petitionThread(link):
 
 def start(update, context):
     prevUser = users.find_one({"chatId": update.effective_chat.id})
-    if (!prevUser):
+    if not prevUser:
         users.insert(
             {
                 "chatId": update.effective_chat.id,
