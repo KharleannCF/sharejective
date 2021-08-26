@@ -531,7 +531,7 @@ if __name__ == "__main__":
         [KeyboardButton(text="Info")],
     ]
      
-    target_time = datetime.time(22,42).replace(tzinfo=local_timezone)
+    target_time = datetime.time(hour=11, minute=21, tzinfo=pytz.timezone('Etc/UTC'))
     queuer.run_daily(
         dailyReminder,
         target_time,
