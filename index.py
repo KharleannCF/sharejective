@@ -459,7 +459,7 @@ def get(update, context):
 
 def dailyReminder(context: CallbackContext):
     subscribedUsers = users.find({"subscribed": True})
-    for user in users:
+    for user in subscribedUsers:
         tasks = col.find({"chatId": user["chatId"], "complete": False})
         context.bot.send_message(
             chat_id=user["chatId"],
@@ -531,7 +531,7 @@ if __name__ == "__main__":
         [KeyboardButton(text="Info")],
     ]
      
-    target_time = datetime.time(hour=23, minute=28, tzinfo=pytz.timezone('Etc/UTC'))
+    target_time = datetime.time(hour=23, minute=32, tzinfo=pytz.timezone('Etc/UTC'))
     print(target_time)
     queuer.run_daily(
         dailyReminder,
